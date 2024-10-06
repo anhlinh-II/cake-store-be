@@ -4,10 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.apache.coyote.http11.filters.VoidInputFilter;
+import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Service;
 
 import com.vn.cake_store.dto.response.ApiResponse;
 import com.vn.cake_store.entity.Customer;
+import com.vn.cake_store.exception.AppException;
+import com.vn.cake_store.exception.ErrorCode;
 import com.vn.cake_store.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -62,11 +65,7 @@ public class CustomerService {
 
           // Check if the customer exists
           if (optionalCustomer.isEmpty()) {
-               return ApiResponse.<Customer>builder()
-                         .code(404) // Use a proper error code
-                         .message("Customer not found")
-                         .result(null) // Result can be null in case of error
-                         .build();
+               throw new AppException(ErrorCode.USER_NOT_EXISTED);
           }
 
           // Get the customer from the database
