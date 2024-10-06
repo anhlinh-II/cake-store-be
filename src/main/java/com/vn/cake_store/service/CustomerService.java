@@ -3,8 +3,6 @@ package com.vn.cake_store.service;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.coyote.http11.filters.VoidInputFilter;
-import org.springframework.boot.autoconfigure.integration.IntegrationProperties.Error;
 import org.springframework.stereotype.Service;
 
 import com.vn.cake_store.dto.response.ApiResponse;
@@ -36,7 +34,7 @@ public class CustomerService {
      public ApiResponse<Customer> getCustomerById(Long id) {
           Optional<Customer> optionalCustomer = this.findById(id);
           if (optionalCustomer == null) {
-               return null;
+               throw new AppException(ErrorCode.USER_NOT_EXISTED);
           }
           Customer customer = optionalCustomer.get();
           return ApiResponse.<Customer>builder()
