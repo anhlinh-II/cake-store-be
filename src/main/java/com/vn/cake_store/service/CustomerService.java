@@ -45,9 +45,9 @@ public class CustomerService {
      }
 
      public ApiResponse<Customer> createCustomer(Customer customer) {
-          var optionalCustomer = this.customerRepository.findByName(customer.getName());
+          Optional<Customer> optionalCustomer = this.customerRepository.findByName(customer.getName());
           if (optionalCustomer.isPresent()) {
-               return null;
+               throw new AppException(ErrorCode.USER_EXISTED);
           }
           this.customerRepository.save(customer);
           return ApiResponse.<Customer>builder()
