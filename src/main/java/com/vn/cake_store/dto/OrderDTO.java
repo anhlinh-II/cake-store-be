@@ -1,5 +1,6 @@
 package com.vn.cake_store.dto;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 import com.vn.cake_store.entity.Order;
@@ -15,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 public class OrderDTO {
      private Long orderId;
      private OrderStatus status;
-     private LocalDateTime orderDate;
+     private Instant orderDate;
      private Long customerId;
 
      public OrderDTO(Order order) {

@@ -33,6 +33,12 @@ public class OrderDetailsService {
           Product product = productRepository.findById(productId)
                     .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
+          boolean existRepeatedDetails = this.orderDetailsRepository.existsByProductAndOrder(product, order);
+
+          if (existRepeatedDetails) {
+               throw new AppException(ErrorCode.ORDER_DETAILS_EXISTED);
+          }
+
           OrderDetails orderDetails = new OrderDetails();
           orderDetails.setOrder(order);
           orderDetails.setPrice(orderDetailsReq.getPrice());

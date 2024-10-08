@@ -9,11 +9,9 @@ public class OrderDetailsMapper {
           orderDetailsResponse.setOrderDetailsId(orderDetails.getOrderDetailsId());
           orderDetailsResponse.setOrderId(orderDetails.getOrder().getOrderId());
           orderDetailsResponse.setPrice(orderDetails.getPrice());
-          orderDetailsResponse.setProduct(orderDetails.getProduct());
+          orderDetailsResponse.setProductId(orderDetails.getProduct().getProductId());
           orderDetailsResponse.setQuantity(orderDetails.getQuantity());
-          // orderDetailsResponse.setCustomerId(order.getCustomer().getCustomerId());
-          // orderDetailsResponse.setOrderDate(order.getOrderDate());
-          // orderDetailsResponse.setStatus(order.getStatus());
+          
          return orderDetailsResponse;
      }
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +28,7 @@ public class OrderController {
      private final OrderService orderService;
 
      @PostMapping
-     public ApiResponse<Order> createOrder(@RequestBody CreateOrderDTO createOrderDTO) {
+     public ApiResponse<OrderDTO> createOrder(@RequestBody CreateOrderDTO createOrderDTO) {
           return this.orderService.createOrder(createOrderDTO);
      }
 
@@ -73,6 +74,17 @@ public class OrderController {
                     .code(1000)
                     .message("Get order with id " + id + " successfully!")
                     .result(orderDTO)
+                    .build();
+     }
+
+     @PutMapping
+     public ApiResponse<OrderDTO> updateOrderById(@RequestBody OrderDTO reqOrderDTO) {
+          var updatedOrder = this.orderService.updateOrder(reqOrderDTO);
+          var updatedOrderDTO = OrderMapper.toOrderDTO(updatedOrder);
+          return ApiResponse.<OrderDTO>builder()
+                    .code(1000)
+                    .message("Update order with id + " + reqOrderDTO.getOrderId() + " successfully!")
+                    .result(updatedOrderDTO)
                     .build();
      }
 }
