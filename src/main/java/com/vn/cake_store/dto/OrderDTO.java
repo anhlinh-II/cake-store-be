@@ -16,11 +16,13 @@ public class OrderDTO {
      private Long orderId;
      private OrderStatus status;
      private LocalDateTime orderDate;
+     private Long customerId;
 
      public OrderDTO(Order order) {
           this.orderId = order.getOrderId();
           this.status = order.getStatus();
           this.orderDate = order.getOrderDate();
+          this.customerId = order.getCustomer().getCustomerId();
           // Initialize other fields as needed
      }
 }

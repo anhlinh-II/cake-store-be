@@ -3,6 +3,7 @@ package com.vn.cake_store.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.vn.cake_store.dto.CreateOrderDTO;
 import com.vn.cake_store.dto.OrderDTO;
 import com.vn.cake_store.dto.response.ApiResponse;
 import com.vn.cake_store.entity.Order;
+import com.vn.cake_store.mapper.OrderMapper;
 import com.vn.cake_store.service.OrderService;
 
 import lombok.RequiredArgsConstructor;
@@ -32,7 +34,7 @@ public class OrderController {
      @GetMapping
      public ApiResponse<List<OrderDTO>> getAllOrders() {
           List<Order> allOrders = this.orderService.getAllOrders();
-          
+
           List<OrderDTO> orderDTOs = allOrders.stream()
                     .map(OrderDTO::new)
                     .collect(Collectors.toList());
@@ -58,6 +60,19 @@ public class OrderController {
                     .code(1000)
                     .message("Get all orders of the user with id " + customerId + " successfully!")
                     .result(orderDTOs)
+                    .build();
+     }
+
+     @GetMapping("/{id}")
+     public ApiResponse<OrderDTO> getOrderById(@PathVariable Long id) {
+
+          var order = this.orderService.getOrderById(id);
+          OrderDTO orderDTO = OrderMapper.toOrderDTO(order);
+
+          return ApiResponse.<OrderDTO>builder()
+                    .code(1000)
+                    .message("Get order with id " + id + " successfully!")
+                    .result(orderDTO)
                     .build();
      }
 }

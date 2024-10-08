@@ -61,4 +61,16 @@ public class OrderService {
 
           return orderRepository.findAllByCustomer(customer);
      }
+
+     public Order findById(Long id) {
+          Order order = this.orderRepository.findById(id)
+                    .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+
+          return order;
+     }
+
+     public Order getOrderById(Long id) {
+          var order = this.findById(id);
+          return order;
+     }
 }
