@@ -40,7 +40,7 @@ public class OrderService {
           this.orderRepository.save(order);
 
           var resOrderDTO = OrderMapper.toOrderDTO(order);
-          
+
           return ApiResponse.<OrderDTO>builder()
                     .code(1000)
                     .message("Create an order successfully!")
@@ -63,7 +63,7 @@ public class OrderService {
 
      public Order findById(Long id) {
           Order order = this.orderRepository.findById(id)
-                    .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+                    .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
 
           return order;
      }
@@ -86,5 +86,10 @@ public class OrderService {
           dbOrder.setOrderId(reqOrderDTO.getOrderId());
 
           return this.orderRepository.save(dbOrder);
+     }
+
+     public void deleteOrder(Long id) {
+          var dbOrder = this.findById(id);
+          this.orderRepository.delete(dbOrder);
      }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -85,6 +86,15 @@ public class OrderController {
                     .code(1000)
                     .message("Update order with id + " + reqOrderDTO.getOrderId() + " successfully!")
                     .result(updatedOrderDTO)
+                    .build();
+     }
+
+     @DeleteMapping("{id}")
+     public ApiResponse<Void> deleteOrder(@PathVariable Long id) {
+          this.orderService.deleteOrder(id);
+          return ApiResponse.<Void>builder()
+                    .code(1000)
+                    .message("Delete order with id " + id + " successfully!")
                     .build();
      }
 }
