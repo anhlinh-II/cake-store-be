@@ -19,7 +19,8 @@ public enum ErrorCode {
      PRODUCT_EXISTED(1009, "Product existed", HttpStatus.BAD_REQUEST),
      PRODUCT_NOT_EXISTED(1010, "Product not existed", HttpStatus.BAD_REQUEST),
      ORDER_DETAILS_EXISTED(1011, "This order details already existed (repeated order and product)", HttpStatus.BAD_REQUEST),
-     ORDER_NOT_EXISTED(1012, "This order don't exist, please check again", HttpStatus.BAD_REQUEST)
+     ORDER_DETAILS_NOT_EXISTED(1012, "This order details doesn't exist", HttpStatus.BAD_REQUEST),
+     ORDER_NOT_EXISTED(1013, "This order don't exist, please check again", HttpStatus.BAD_REQUEST)
      ;
 
      ErrorCode(int code, String message, HttpStatusCode statusCode) {
