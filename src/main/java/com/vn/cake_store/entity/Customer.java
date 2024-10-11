@@ -21,7 +21,7 @@ import lombok.Data;
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "customer_id") 
+    @Column(name = "customer_id")
     private Long customerId;
 
     @Column(nullable = false)
@@ -36,4 +36,7 @@ public class Customer {
     @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     @JsonIgnore
     private Set<Order> orders;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<Review> reviews;
 }
