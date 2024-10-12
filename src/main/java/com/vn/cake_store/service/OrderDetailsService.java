@@ -37,7 +37,7 @@ public class OrderDetailsService {
 
      public OrderDetails createOrderDetails(CreateOrderDetailsRequest orderDetailsReq) {
           // Find the order by its ID
-          Order order = this.orderService.findById(orderDetailsReq.getOrderId());
+          Order order = this.orderService.findById(orderDetailsReq.getOrderId()).get();
 
           // Get the set of product IDs from the request
           Long productId = orderDetailsReq.getProductId();
@@ -83,7 +83,7 @@ public class OrderDetailsService {
           var dbProduct = this.productService.findById(reqDetails.getProductId())
                     .orElseThrow(() -> new AppException(ErrorCode.PRODUCT_NOT_EXISTED));
 
-          var dbOrder = this.orderService.findById(reqDetails.getOrderId());
+          var dbOrder = this.orderService.findById(reqDetails.getOrderId()).get();
 
           boolean existRepeatedDetails = this.orderDetailsRepository.existsByProductAndOrder(dbProduct, dbOrder);
 

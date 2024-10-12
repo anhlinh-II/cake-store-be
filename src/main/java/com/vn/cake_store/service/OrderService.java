@@ -61,21 +61,22 @@ public class OrderService {
           return orderRepository.findAllByCustomer(customer);
      }
 
-     public Order findById(Long id) {
-          Order order = this.orderRepository.findById(id)
-                    .orElseThrow(() -> new AppException(ErrorCode.ORDER_NOT_EXISTED));
-
-          return order;
+     public Optional<Order> findById(Long id) {
+          Optional<Order> optionalOrder = this.orderRepository.findById(id);
+          if (optionalOrder.isEmpty()) {
+               throw new AppException(ErrorCode.ORDER_NOT_EXISTED);
+          }
+          return optionalOrder;
      }
 
      public Order getOrderById(Long id) {
           var order = this.findById(id);
-          return order;
+          return order.get();
      }
 
      public Order updateOrder(OrderDTO reqOrderDTO) {
           // get order from db
-          var dbOrder = this.findById(reqOrderDTO.getOrderId());
+          var dbOrder = this.findById(reqOrderDTO.getOrderId()).get();
           // get user who owns this order from db
           var customer = customerService.findById(reqOrderDTO.getCustomerId());
 
@@ -89,7 +90,7 @@ public class OrderService {
      }
 
      public void deleteOrder(Long id) {
-          var dbOrder = this.findById(id);
+          var dbOrder = this.findById(id).get();
           this.orderRepository.delete(dbOrder);
      }
 }
