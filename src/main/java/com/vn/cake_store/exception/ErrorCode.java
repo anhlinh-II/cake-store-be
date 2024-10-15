@@ -25,7 +25,12 @@ public enum ErrorCode {
      PAYMENT_NOT_EXISTED(1014, "This payment don't existed", HttpStatus.BAD_REQUEST),
      PAYMENT_EXISTED(1015, "Payment existed, this order already has another payment", HttpStatus.BAD_REQUEST),
      REVIEW_NOT_EXISTED(1016, "Review doesn't exist", HttpStatus.BAD_REQUEST),
-     REVIEW_EXISTED(1017, "This customer has already had a review on this product", HttpStatus.BAD_REQUEST);
+     REVIEW_EXISTED(1017, "This customer has already had a review on this product", HttpStatus.BAD_REQUEST),
+     SUPPLIER_EXISTED(1018, "this supplier has already existed by name or email", HttpStatus.BAD_REQUEST),
+     SUPPLIER_NOT_EXISTED(1019, "this supplier doesn't exist", HttpStatus.BAD_REQUEST), 
+     STORE_NOT_EXISTED(1020, "This store doesn't exist", HttpStatus.BAD_REQUEST), 
+     EMPLOYEE_NOT_EXISTED(1021, "This employee doesn't exist", HttpStatus.BAD_REQUEST)
+     ;
 
      ErrorCode(int code, String message, HttpStatusCode statusCode) {
           this.code = code;

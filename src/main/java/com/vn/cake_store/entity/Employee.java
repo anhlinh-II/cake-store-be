@@ -1,8 +1,8 @@
 package com.vn.cake_store.entity;
 
 import jakarta.persistence.*;
+import java.time.Instant;
 import lombok.Data;
-import java.time.LocalDate;
 
 import com.vn.cake_store.entity.constants.Role;
 
@@ -25,11 +25,16 @@ public class Employee {
     private Double salary;
 
     @Column(name = "hire_date", nullable = false)
-    private LocalDate hireDate;
+    private Instant hireDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "store_id", nullable = false)  // Foreign key in employee table
+    @JoinColumn(name = "store_id", nullable = true)  // Foreign key in employee table
     private Store store;
+
+    @PrePersist
+    protected void beforeCreate() {
+        this.hireDate = Instant.now();
+    }
 
 }
 

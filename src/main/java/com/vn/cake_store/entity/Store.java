@@ -16,8 +16,8 @@ public class Store {
      private String name;
      private String location;
 
-     @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-     private Set<Inventory> inventories;
+     @OneToOne(mappedBy = "store", cascade = CascadeType.ALL)
+     private Inventory inventories;
 
      @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
      private Set<Employee> employees; // All employees in the store
