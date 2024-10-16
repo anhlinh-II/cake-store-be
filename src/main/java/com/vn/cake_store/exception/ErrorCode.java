@@ -29,7 +29,10 @@ public enum ErrorCode {
      SUPPLIER_EXISTED(1018, "this supplier has already existed by name or email", HttpStatus.BAD_REQUEST),
      SUPPLIER_NOT_EXISTED(1019, "this supplier doesn't exist", HttpStatus.BAD_REQUEST), 
      STORE_NOT_EXISTED(1020, "This store doesn't exist", HttpStatus.BAD_REQUEST), 
-     EMPLOYEE_NOT_EXISTED(1021, "This employee doesn't exist", HttpStatus.BAD_REQUEST)
+     EMPLOYEE_NOT_EXISTED(1021, "This employee doesn't exist", HttpStatus.BAD_REQUEST), 
+     ISNOT_MANAGER(1022, "This employee is not a manager", HttpStatus.BAD_REQUEST), 
+     STORE_EXISTED(1023, "This store has already existed", HttpStatus.BAD_REQUEST), 
+     MANAGER_IN_USED(1024, "This manager has already worked in another store", HttpStatus.BAD_REQUEST)
      ;
 
      ErrorCode(int code, String message, HttpStatusCode statusCode) {
