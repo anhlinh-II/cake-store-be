@@ -3,6 +3,9 @@ package com.vn.cake_store.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vn.cake_store.dto.request.CreateReviewRequest;
@@ -79,9 +82,8 @@ public class ReviewService {
           this.reviewRepository.delete(this.findById(id).get());
      }
 
-     public List<Review> getReviewsByProductId(Long id) {
-          var product = this.productService.findById(id).get();
-
-          return this.reviewRepository.findAllByProduct(product);
+     public Page<Review> getReviewsByProductId(Product product, int page, int size) {
+          Pageable pageable = PageRequest.of(page, size);
+          return reviewRepository.findAllByProduct(product, pageable);
      }
 }
