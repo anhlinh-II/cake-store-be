@@ -3,12 +3,17 @@ package com.vn.cake_store.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.vn.cake_store.dto.response.ApiResponse;
+import com.vn.cake_store.dto.response.CustomerResponse;
 import com.vn.cake_store.entity.Customer;
 import com.vn.cake_store.exception.AppException;
 import com.vn.cake_store.exception.ErrorCode;
+import com.vn.cake_store.mapper.CustomerMapper;
 import com.vn.cake_store.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -18,11 +23,15 @@ import lombok.RequiredArgsConstructor;
 public class CustomerService {
 
      private final CustomerRepository customerRepository;
+     private final CustomerMapper customerMapper;
 
-     public ApiResponse<List<Customer>> getAllCustomers() {
-          return ApiResponse.<List<Customer>>builder()
+     public ApiResponse<Page<CustomerResponse>> getAllCustomers(int page, int size) {
+          Pageable pageable = PageRequest.of(page, size);
+          Page<Customer> customers = customerRepository.findAll(pageable);
+          Page<CustomerResponse> allResCustomers = customers.map(customerMapper::toCustomerResponse);
+          return ApiResponse.<Page<CustomerResponse>>builder()
                     .code(1000)
-                    .result(customerRepository.findAll())
+                    .result(allResCustomers)
                     .message("Get all users successfully!")
                     .build();
      }
@@ -88,9 +97,9 @@ public class CustomerService {
 
      public ApiResponse<Void> deleteCustomer(Long id) {
           return ApiResponse.<Void>builder()
-          .code(1000)
-          .message("Delete customer with id " + id + " succesfully!")
-          .result(null)
-          .build();
+                    .code(1000)
+                    .message("Delete customer with id " + id + " succesfully!")
+                    .result(null)
+                    .build();
      }
 }
