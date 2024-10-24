@@ -1,5 +1,6 @@
 package com.vn.cake_store.controller;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vn.cake_store.dto.ProductDTO;
@@ -45,10 +47,13 @@ public class ProductController {
      }
 
      @GetMapping
-     public ApiResponse<List<ProductDTO>> getAllProduct() {
-          var allProduct = this.productService.getAllProduct();
-          var allProductDTO = allProduct.stream().map(productMapper::toProductDTO).toList();
-          return ApiResponse.<List<ProductDTO>>builder()
+     public ApiResponse<Page<ProductDTO>> getAllProduct(
+               @RequestParam(defaultValue = "0") int page, // Default to page 0
+               @RequestParam(defaultValue = "10") int size // Default to 10 items per page
+     ) {
+          var allProduct = this.productService.getAllProduct(page, size);
+          Page<ProductDTO> allProductDTO = allProduct.map(productMapper::toProductDTO);
+          return ApiResponse.<Page<ProductDTO>>builder()
                     .code(1000)
                     .message("Get all product successfully!")
                     .result(allProductDTO)

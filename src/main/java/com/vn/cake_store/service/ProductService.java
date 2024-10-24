@@ -1,11 +1,15 @@
 package com.vn.cake_store.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.List;
 
 import com.vn.cake_store.dto.ProductDTO;
+import com.vn.cake_store.entity.Customer;
 import com.vn.cake_store.entity.Product;
 import com.vn.cake_store.entity.Supplier;
 import com.vn.cake_store.exception.AppException;
@@ -64,8 +68,9 @@ public class ProductService {
           return this.findById(id).get();
      }
 
-     public List<Product> getAllProduct() {
-          return this.productRepository.findAll();
+     public Page<Product> getAllProduct(int page, int size) {
+          Pageable pageable = PageRequest.of(page, size);
+          return productRepository.findAll(pageable);
      }
 
      public Product updateProduct(ProductDTO product) {
