@@ -14,6 +14,8 @@ import com.vn.cake_store.entity.Review;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+     Page<Review> findAll(Pageable pageable);
+
      boolean existsByProductAndCustomer(Product product, Customer customer);
 
      Page<Review> findAllByProduct(Product product, Pageable pageable);

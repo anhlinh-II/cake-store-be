@@ -10,9 +10,9 @@ import lombok.Data;
 public class ReviewResponse {
      private Long reviewId;
 
-     private Long productId;
+     private String productName;
 
-     private Long customerId;
+     private String customerName;
 
      private Rating rating;
 

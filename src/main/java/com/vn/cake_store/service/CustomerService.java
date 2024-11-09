@@ -40,16 +40,17 @@ public class CustomerService {
           return customerRepository.findById(id);
      }
 
-     public ApiResponse<Customer> getCustomerById(Long id) {
+     public ApiResponse<CustomerResponse> getCustomerById(Long id) {
           Optional<Customer> optionalCustomer = this.findById(id);
           if (optionalCustomer == null) {
                throw new AppException(ErrorCode.USER_NOT_EXISTED);
           }
           Customer customer = optionalCustomer.get();
-          return ApiResponse.<Customer>builder()
+          CustomerResponse response = customerMapper.toCustomerResponse(customer);
+          return ApiResponse.<CustomerResponse>builder()
                     .code(1000)
                     .message("Get User Successfully!")
-                    .result(customer)
+                    .result(response)
                     .build();
      }
 
@@ -66,7 +67,7 @@ public class CustomerService {
                     .build();
      }
 
-     public ApiResponse<Customer> updateCustomer(Long id, Customer customer) {
+     public ApiResponse<CustomerResponse> updateCustomer(Long id, Customer customer) {
           // Find the customer by ID
           var optionalCustomer = this.findById(id);
 
@@ -85,17 +86,18 @@ public class CustomerService {
           dbCustomer.setPhone(customer.getPhone());
 
           // Save the updated customer to the database
-          customerRepository.save(dbCustomer);
+          var response = customerMapper.toCustomerResponse(customerRepository.save(dbCustomer));
 
           // Return the updated customer in the response
-          return ApiResponse.<Customer>builder()
+          return ApiResponse.<CustomerResponse>builder()
                     .code(1000)
                     .message("Update user successfully!")
-                    .result(dbCustomer) // Return the updated dbCustomer
+                    .result(response) // Return the updated dbCustomer
                     .build();
      }
 
      public ApiResponse<Void> deleteCustomer(Long id) {
+          this.customerRepository.delete(this.findById(id).get());
           return ApiResponse.<Void>builder()
                     .code(1000)
                     .message("Delete customer with id " + id + " succesfully!")

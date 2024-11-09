@@ -65,8 +65,10 @@ public class ReviewService {
           return this.findById(id).get();
      }
 
-     public List<Review> getAllReivew() {
-          return this.reviewRepository.findAll();
+     public Page<Review> getAllReivew(int page, int size) {
+          Pageable pageable = PageRequest.of(page, size);
+
+          return this.reviewRepository.findAll(pageable);
      }
 
      public Review updateReview(UpdateReviewRequest reqReview) {

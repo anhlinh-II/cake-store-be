@@ -36,7 +36,7 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<Customer> getCustomerById(@PathVariable Long id) {
+    public ApiResponse<CustomerResponse> getCustomerById(@PathVariable Long id) {
         return customerService.getCustomerById(id);
     }
 
@@ -46,7 +46,7 @@ public class CustomerController {
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<Customer> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+    public ApiResponse<CustomerResponse> updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
         return customerService.updateCustomer(id, customer);
     }
 
