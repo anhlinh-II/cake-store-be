@@ -70,10 +70,10 @@ public class ReviewController {
      public ApiResponse<ReviewResponse> updateReivew(@RequestBody UpdateReviewRequest request) {
           return ApiResponse.<ReviewResponse>builder()
                     .code(1000)
-                    // myse.atc
-                    // irecc ierer(12)
-                    // constrainsensor10150 -> 10
-                    // khai báo baud 9600
+               //      myse.atc
+               //      irecc ierer(12)
+               //      constrainsensor10150 -> 10
+               //      khai báo baud 9600
                //      không thuộc digital io -> serial
                //      siêu âm archino pulchino ECHO -> độ rộng xung
                //      ITU iot là cơ sở hạ tầng toàn cầu
